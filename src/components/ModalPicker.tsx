@@ -6,6 +6,7 @@ import {
   View,
   TextInput,
 } from 'react-native';
+import {useThemeContext} from '../context/themeContext';
 type Props<T> = {
   items: T[];
   isOpen: boolean;
@@ -21,20 +22,25 @@ export default function ModalPicker<T>({
   keyExtractor,
   search,
 }: Props<T>) {
+  const {colors} = useThemeContext();
   const [searchText, setSearchText] = React.useState<string>('');
   if (!isOpen) {
     return null;
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: colors.background}]}>
       {search && (
-        <View style={styles.searchContainer}>
+        <View style={[styles.searchContainer]}>
           <TextInput
-            style={styles.searchInput}
+            style={[
+              styles.searchInput,
+              {color: colors.text, backgroundColor: colors.secondary},
+            ]}
             value={searchText}
             placeholder="Search"
-            placeholderTextColor="#999"
+            placeholderTextColor={colors.text}
             onChangeText={text => {
               if (search && typeof search === 'function') {
                 if (text.length > 2 || text.length === 0) search(text);
@@ -60,7 +66,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     flex: 1,
     width: '100%',
     height: '100%',
@@ -80,7 +85,6 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: 40,
-    borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,

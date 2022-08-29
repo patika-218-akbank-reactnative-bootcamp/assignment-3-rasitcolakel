@@ -16,6 +16,7 @@ import ModalPicker from '../components/ModalPicker';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButtom';
 import {useUserContext} from '../context/userContext';
+import {useThemeContext} from '../context/themeContext';
 type PhoneCode = {
   code: string;
   name: string;
@@ -48,6 +49,7 @@ const Login: React.FC<Props> = () => {
   const lastNameRef = useRef<any>(null);
   const usernameRef = useRef<any>(null);
 
+  const {colors} = useThemeContext();
   const {login} = useUserContext();
 
   const handleSubmit = () => {
@@ -76,8 +78,8 @@ const Login: React.FC<Props> = () => {
           setCountryCode(item.dial_code);
           setCountryCodeModal(false);
         }}
-        style={styles.optionContaier}>
-        <Text style={styles.renderItem}>
+        style={[styles.optionContaier, {borderBottomColor: colors.gray}]}>
+        <Text style={[styles.renderItem, {color: colors.text}]}>
           {item.dial_code + ' - ' + item.name}
         </Text>
       </TouchableOpacity>
@@ -215,7 +217,6 @@ const styles = StyleSheet.create({
   picker: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'blue',
     flex: 1,
   },
   optionContaier: {
@@ -223,7 +224,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
     padding: 10,
     width: '100%',
   },
@@ -231,10 +231,12 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '100%',
     justifyContent: 'center',
-    backgroundColor: '#f2f2f2',
     flexDirection: 'row',
   },
-  renderItem: {flex: 1, width: '100%'},
+  renderItem: {
+    flex: 1,
+    width: '100%',
+  },
   phoneRight: {
     borderRightWidth: 1,
   },

@@ -1,23 +1,23 @@
 // theme context react native typescript
 import {createContext, useContext} from 'react';
+import {lightTheme, ThemeColors} from '../theme';
 
 const ThemeState = createContext<any>(null);
 
-export type Theme = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  themename: string;
-};
-
+export enum Theme {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
 export type ThemeState = {
   theme: Theme | null;
   setTheme: (theme: Theme) => void;
+  colors: ThemeColors;
 };
 
 const initialState: ThemeState = {
   theme: null,
-  setTheme: (_theme: Theme) => {},
+  setTheme: (_theme: string) => {},
+  colors: lightTheme,
 };
 
 export const ThemeContext = createContext<ThemeState>(initialState);
