@@ -6,7 +6,6 @@ import BottomNavigator from './BottomNavigator';
 
 export default function Navigation() {
   const {user} = useUserContext();
-  console.log('user', user);
   return (
     <NavigationContainer>
       {user ? <BottomNavigator /> : <AuthNavigator />}

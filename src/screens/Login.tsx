@@ -8,12 +8,14 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
+  Alert,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import phoneCodes from '../assets/phoneCodes.json';
 import ModalPicker from '../components/ModalPicker';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButtom';
+import {useUserContext} from '../context/userContext';
 type PhoneCode = {
   code: string;
   name: string;
@@ -46,6 +48,27 @@ const Login: React.FC<Props> = () => {
   const lastNameRef = useRef<any>(null);
   const usernameRef = useRef<any>(null);
 
+  const {login} = useUserContext();
+
+  const handleSubmit = () => {
+    if (
+      !(
+        firstName.length > 0 &&
+        lastName.length > 0 &&
+        username.length > 0 &&
+        phone.length > 0
+      )
+    ) {
+      return Alert.alert('Uyarı', 'Lütfen tüm alanları doldurunuz.');
+    }
+    login({
+      id: Math.random().toString(),
+      phone,
+      firstName,
+      lastName,
+      username,
+    });
+  };
   const renderItem = ({item}: {item: PhoneCode}) => {
     return (
       <TouchableOpacity
@@ -144,7 +167,18 @@ const Login: React.FC<Props> = () => {
             </View>
 
             <View style={styles.inputContainer}>
-              <CustomButton onPress={() => {}} text={'Giriş Yap'} />
+              <CustomButton
+                onPress={() => handleSubmit()}
+                text={'Giriş Yap'}
+                disabled={
+                  !(
+                    firstName.length > 0 &&
+                    lastName.length > 0 &&
+                    username.length > 0 &&
+                    phone.length > 0
+                  )
+                }
+              />
             </View>
           </View>
         </TouchableWithoutFeedback>

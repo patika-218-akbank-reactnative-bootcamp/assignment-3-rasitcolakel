@@ -1,12 +1,14 @@
 import {Text, View} from 'react-native';
 import React from 'react';
+import {useUserContext} from '../context/userContext';
 
 type Props = {};
 
 const Home: React.FC<Props> = () => {
+  const {user} = useUserContext();
   return (
     <View>
-      <Text>Home</Text>
+      <Text>{user?.firstName}</Text>
     </View>
   );
 };

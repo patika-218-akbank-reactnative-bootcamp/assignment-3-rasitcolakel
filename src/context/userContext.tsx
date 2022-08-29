@@ -1,10 +1,11 @@
 // user context react native typescript
-import React, {createContext, useContext, useReducer} from 'react';
+import {createContext, useContext} from 'react';
 
 const UserState = createContext<any>(null);
 
 export type User = {
   id: string;
+  phone: string;
   firstName: string;
   lastName: string;
   username: string;
@@ -18,7 +19,7 @@ export type UserState = {
 
 const initialState: UserState = {
   user: null,
-  login: (user: User) => {},
+  login: (_user: User) => {},
   logOut: () => {},
 };
 

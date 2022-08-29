@@ -10,7 +10,10 @@ type Props = TouchableOpacityProps & {
 
 const CustomButton = (props: Props) => {
   return (
-    <TouchableOpacity onPress={props.onPress} style={styles.button}>
+    <TouchableOpacity
+      onPress={props.onPress}
+      disabled={props.disabled}
+      style={[styles.button, props.disabled ? styles.disabledButton : {}]}>
       <Text style={styles.buttonText}>{props.text}</Text>
     </TouchableOpacity>
   );
@@ -23,6 +26,9 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 5,
     minWidth: '100%',
+  },
+  disabledButton: {
+    backgroundColor: 'rgba(0,0,0,0.3)',
   },
   buttonText: {
     color: '#fff',

@@ -1,5 +1,5 @@
 // theme context react native typescript
-import React, {createContext, useContext, useReducer} from 'react';
+import {createContext, useContext} from 'react';
 
 const ThemeState = createContext<any>(null);
 
@@ -12,14 +12,12 @@ export type Theme = {
 
 export type ThemeState = {
   theme: Theme | null;
-  login: (theme: Theme) => void;
-  logOut: () => void;
+  setTheme: (theme: Theme) => void;
 };
 
 const initialState: ThemeState = {
   theme: null,
-  login: (theme: Theme) => {},
-  logOut: () => {},
+  setTheme: (_theme: Theme) => {},
 };
 
 export const ThemeContext = createContext<ThemeState>(initialState);
