@@ -4,6 +4,7 @@ import {useUserContext} from '../context/userContext';
 import AuthNavigator from './Auth';
 import BottomNavigator from './BottomNavigator';
 import {Theme, useThemeContext} from '../context/themeContext';
+import {StatusBar} from 'react-native';
 
 export default function Navigation() {
   const {user} = useUserContext();
@@ -20,6 +21,9 @@ export default function Navigation() {
           text: colors.text,
         },
       }}>
+      <StatusBar
+        barStyle={`${theme === Theme.DARK ? 'light' : 'dark'}-content`}
+      />
       {user ? <BottomNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
