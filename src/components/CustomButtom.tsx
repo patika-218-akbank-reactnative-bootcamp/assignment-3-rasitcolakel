@@ -7,22 +7,38 @@ type Props = TouchableOpacityProps & {
   onPress: () => void;
   text: string;
   style?: any;
+  variant?: 'primary' | 'error' | 'success' | 'link';
+  isOutlined?: boolean;
+  borderRadius?: number;
 };
 
 const CustomButton = (props: Props) => {
   const {colors} = useThemeContext();
+  const colorMap = {
+    primary: colors.blue,
+    error: colors.red,
+    success: colors.green,
+    link: '',
+  };
+  let backgroundColor = colorMap[props.variant || 'primary'];
+
+  let textColor = colors.text;
+  let borderRadius = props.borderRadius ? props.borderRadius : 0;
+  if (props.disabled) {
+    backgroundColor = colors.gray;
+  }
+  if (props.isOutlined) {
+    textColor = colorMap[props.variant || 'primary'];
+    backgroundColor = 'transparent';
+  } else {
+    textColor = colors.white;
+  }
   return (
     <TouchableOpacity
       onPress={props.onPress}
       disabled={props.disabled}
-      style={[
-        styles.button,
-        {backgroundColor: colors.blue},
-        props.disabled ? {backgroundColor: colors.secondary} : {},
-      ]}>
-      <Text style={[styles.buttonText, {color: colors.text}]}>
-        {props.text}
-      </Text>
+      style={[styles.button, {backgroundColor, borderRadius}]}>
+      <Text style={[styles.buttonText, {color: textColor}]}>{props.text}</Text>
     </TouchableOpacity>
   );
 };

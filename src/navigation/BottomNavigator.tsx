@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Home from '../screens/Home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProfileStack from '../screens/profile/index';
 const BottomTabs = createBottomTabNavigator();
 
 type Props = {};
@@ -22,7 +23,7 @@ const BottomNavigator: React.FC<Props> = () => {
           tabBarLabel: 'Contacts',
           tabBarIcon: ({color, size, focused}) => (
             <Ionicons
-              name={`ios-people${focused ? '' : '-outline'}`}
+              name={`ios-person-circle${focused ? '' : '-outline'}`}
               color={color}
               size={size + 5}
             />
@@ -41,7 +42,7 @@ const BottomNavigator: React.FC<Props> = () => {
           tabBarLabel: 'Messages',
           tabBarIcon: ({color, size, focused}) => (
             <Ionicons
-              name={`ios-chatbox${focused ? '' : '-outline'}`}
+              name={`chatbubbles${focused ? '' : '-outline'}`}
               color={color}
               size={size + 5}
             />
@@ -49,18 +50,19 @@ const BottomNavigator: React.FC<Props> = () => {
         }}
       />
       <BottomTabs.Screen
-        name="Profile"
-        component={Home}
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
           tabBarStyle: {
             borderTopWidth: 0,
             borderTopColor: 'transparent',
           },
+          headerShown: false,
           headerShadowVisible: false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size, focused}) => (
             <Ionicons
-              name={`ios-person${focused ? '' : '-outline'}`}
+              name={`settings${focused ? '' : '-outline'}`}
               color={color}
               size={size + 5}
             />

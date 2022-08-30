@@ -61,11 +61,11 @@ const Login: React.FC<Props> = () => {
         phone.length > 0
       )
     ) {
-      return Alert.alert('Uyarı', 'Lütfen tüm alanları doldurunuz.');
+      return Alert.alert('Warning', 'Please fill all fields');
     }
     login({
       id: Math.random().toString(),
-      phone,
+      phone: countryCode + ' ' + phone,
       firstName,
       lastName,
       username,
@@ -100,7 +100,7 @@ const Login: React.FC<Props> = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
-            <Text style={styles.headerText}>Giriş Yap</Text>
+            <Text style={styles.headerText}>Log In"</Text>
             <View style={styles.inputContainer}>
               <CustomInput
                 onPressIn={() => {
@@ -171,7 +171,7 @@ const Login: React.FC<Props> = () => {
             <View style={styles.inputContainer}>
               <CustomButton
                 onPress={() => handleSubmit()}
-                text={'Giriş Yap'}
+                text={'Log In'}
                 disabled={
                   !(
                     firstName.length > 0 &&

@@ -10,13 +10,13 @@ export enum Theme {
 }
 export type ThemeState = {
   theme: Theme | null;
-  setTheme: (theme: Theme) => void;
+  setTheme: () => void;
   colors: ThemeColors;
 };
 
 const initialState: ThemeState = {
   theme: null,
-  setTheme: (_theme: string) => {},
+  setTheme: () => {},
   colors: lightTheme,
 };
 

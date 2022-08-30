@@ -1,15 +1,16 @@
 export const darkTheme: ThemeColors = {
   background: '#000000',
   secondary: '#1C1C1E',
-  blue: '#037EE5',
+  blue: '#037ee5b3',
   blueText: '#FFFFFF',
-  green: '#00B12C',
-  red: '#FE3B30',
+  green: '#00b12cb3',
+  red: '#fe3b30b3',
   gray: '#3c3c434d',
   card1: '#313131',
   card2: '#262628',
-  text: '#fff',
+  text: '#ffffffb3',
   textSecondary: '#aaa',
+  white: '#FFFFFF',
 };
 
 export const lightTheme: ThemeColors = {
@@ -23,7 +24,8 @@ export const lightTheme: ThemeColors = {
   gray: '#3c3c434d',
   card1: '#2DA430',
   card2: '#FFFFFF',
-  textSecondary: '#000000',
+  textSecondary: '#444',
+  white: '#FFFFFF',
 };
 
 export type ThemeColors = {
@@ -38,4 +40,5 @@ export type ThemeColors = {
   card2: string;
   text: string;
   textSecondary: string;
+  white: string;
 };

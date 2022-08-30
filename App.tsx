@@ -37,7 +37,6 @@ const App = () => {
     });
 
     AsyncStorage.getItem('theme').then(_theme => {
-      console.log('_theme', _theme);
       if (_theme) {
         setTheme(JSON.parse(_theme));
       } else {
@@ -47,6 +46,15 @@ const App = () => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    // save theme to async storage
+    AsyncStorage.setItem('theme', JSON.stringify(theme));
+  }, [theme]);
+
+  const toogleTheme = () => {
+    setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT);
+  };
 
   return (
     <UserContext.Provider
@@ -58,7 +66,7 @@ const App = () => {
       <ThemeContext.Provider
         value={{
           theme,
-          setTheme,
+          setTheme: toogleTheme,
           colors: theme === Theme.DARK ? darkTheme : lightTheme,
         }}>
         <Navigation />
