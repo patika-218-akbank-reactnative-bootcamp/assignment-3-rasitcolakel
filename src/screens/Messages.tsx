@@ -4,13 +4,13 @@ import {useUserContext} from '../context/userContext';
 
 type Props = {};
 
-const Home: React.FC<Props> = () => {
+const MessagesScreen: React.FC<Props> = () => {
   const {user} = useUserContext();
   return (
     <View>
-      <Text>{user?.firstName}</Text>
+      <Text>{user?.firstName} Messages</Text>
     </View>
   );
 };
 
-export default Home;
+export default MessagesScreen;

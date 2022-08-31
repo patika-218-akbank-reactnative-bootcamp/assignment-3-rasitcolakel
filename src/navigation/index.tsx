@@ -2,9 +2,9 @@ import * as React from 'react';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {useUserContext} from '../context/userContext';
 import AuthNavigator from './Auth';
-import BottomNavigator from './BottomNavigator';
 import {Theme, useThemeContext} from '../context/themeContext';
 import {StatusBar} from 'react-native';
+import AppNavigator from './AppNavigator';
 
 export default function Navigation() {
   const {user} = useUserContext();
@@ -24,7 +24,7 @@ export default function Navigation() {
       <StatusBar
         barStyle={`${theme === Theme.DARK ? 'light' : 'dark'}-content`}
       />
-      {user ? <BottomNavigator /> : <AuthNavigator />}
+      {user ? <AppNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
