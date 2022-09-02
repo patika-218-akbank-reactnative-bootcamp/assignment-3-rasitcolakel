@@ -11,6 +11,8 @@ export const darkTheme: ThemeColors = {
   text: '#ffffffb3',
   textSecondary: '#aaa',
   white: '#FFFFFF',
+  messageText: '#000000',
+  messageTextSecondary: '#444',
 };
 
 export const lightTheme: ThemeColors = {
@@ -19,13 +21,15 @@ export const lightTheme: ThemeColors = {
   secondary: '#F6F6F6',
   blue: '#037EE5',
   blueText: '#037EE5',
-  green: '#00B12C',
+  green: '#e2fec6',
   red: '#FE3B30',
   gray: '#3c3c434d',
   card1: '#2DA430',
   card2: '#FFFFFF',
   textSecondary: '#444',
   white: '#FFFFFF',
+  messageText: '#FFFFFF',
+  messageTextSecondary: '#eee',
 };
 
 export type ThemeColors = {
@@ -41,4 +45,6 @@ export type ThemeColors = {
   text: string;
   textSecondary: string;
   white: string;
+  messageText: string;
+  messageTextSecondary: string;
 };

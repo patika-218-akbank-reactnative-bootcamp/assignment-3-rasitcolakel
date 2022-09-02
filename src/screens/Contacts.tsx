@@ -1,8 +1,6 @@
 import {
   Button,
   FlatList,
-  Image,
-  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,17 +12,20 @@ import {useThemeContext} from '../context/themeContext';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import Popover, {PopoverPlacement} from 'react-native-popover-view';
 import Feather from 'react-native-vector-icons/Feather';
+import {useContactsContext} from '../context/contactsContext';
+import Image from 'react-native-fast-image';
+
 type Props = {
   navigation: NavigationProp<ParamListBase>;
 };
 
 const ContactsScreen: React.FC<Props> = ({navigation}: Props) => {
-  const [contacts, setContacts] = React.useState<Contact[]>([]);
+  const {contacts, setContacts, setChatContact} = useContactsContext();
   const [showPopover, setShowPopover] = React.useState<boolean>(false);
   const {colors, theme} = useThemeContext();
   const [sortType, setSortType] = React.useState<'name' | 'date'>('date');
   useEffect(() => {
-    if (contacts.length !== 0) {
+    if (contacts !== null && contacts.length !== 0) {
       return;
     }
     let _contacts = generateContacts(20);
@@ -88,40 +89,46 @@ const ContactsScreen: React.FC<Props> = ({navigation}: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation, theme, sortType, showPopover]);
 
+  const goToChatScreen = (contact: Contact) => {
+    setChatContact(contact);
+    navigation.navigate('Chat');
+  };
+
   const sortByName = () => {
     setShowPopover(false);
-    if (sortType === 'date') {
+    if (sortType === 'date' && contacts) {
       setSortType('name');
-      setContacts(prev => {
-        return prev.sort((a, b) => {
+      setContacts(
+        contacts.sort((a, b) => {
           return a.name > b.name ? 1 : -1;
-        });
-      });
+        }),
+      );
     }
   };
 
   const sortByDate = () => {
     setShowPopover(false);
-    if (sortType !== 'date') {
+    if (sortType !== 'date' && contacts) {
       setSortType('date');
-      setContacts(prev => {
-        return prev.sort((a, b) => {
+      setContacts(
+        contacts.sort((a, b) => {
           return a.lastSeen > b.lastSeen ? -1 : 1;
-        });
-      });
+        }),
+      );
     }
   };
 
   const onEndReached = () => {
-    setContacts(prev => {
-      return [...prev, ...generateContacts(20)];
-    });
+    setContacts([...contacts, ...generateContacts(20)]);
   };
+
   return (
     <>
       <FlatList
         data={contacts}
-        renderItem={({item}) => <ContactCard contact={item} />}
+        renderItem={({item}) => (
+          <ContactCard contact={item} onPress={() => goToChatScreen(item)} />
+        )}
         keyExtractor={item => item.name}
         ItemSeparatorComponent={() => (
           <View
@@ -135,16 +142,19 @@ const ContactsScreen: React.FC<Props> = ({navigation}: Props) => {
   );
 };
 
-const ContactCard = ({contact}: {contact: Contact}) => {
+type ContactCardProps = {
+  contact: Contact;
+  onPress: () => void;
+};
+
+const ContactCard = ({contact, onPress}: ContactCardProps) => {
   const {colors} = useThemeContext();
   return (
-    <TouchableOpacity
-      style={styles.contactContainer}
-      onPress={() => {
-        console.log(contact);
-      }}>
+    <TouchableOpacity style={styles.contactContainer} onPress={onPress}>
       <Image
-        source={{uri: `https://i.pravatar.cc/100?u${contact.id}`}}
+        source={{
+          uri: `https://i.pravatar.cc/100?u${contact.id}`,
+        }}
         style={[styles.image, {borderColor: colors.secondary}]}
       />
       <View>

@@ -1,12 +1,14 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
-import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import CustomButton from '../../components/CustomButtom';
 import List, {ListItem} from '../../components/List';
 import {useThemeContext} from '../../context/themeContext';
 import {useUserContext} from '../../context/userContext';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Image from 'react-native-fast-image';
+
 const Profile = () => {
   const {colors} = useThemeContext();
   const {logOut, user} = useUserContext();

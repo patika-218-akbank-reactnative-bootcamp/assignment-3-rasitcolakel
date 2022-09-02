@@ -4,8 +4,11 @@ import ChatScreen from '../screens/Chat';
 import BottomNavigator from './BottomNavigator';
 
 type Props = {};
-const AppNav = createStackNavigator();
-
+const AppNav = createStackNavigator<StackParamList>();
+export type StackParamList = {
+  BottomNavigator: undefined;
+  Chat: undefined;
+};
 const AppNavigator: React.FC<Props> = () => {
   return (
     <AppNav.Navigator>
@@ -13,6 +16,7 @@ const AppNavigator: React.FC<Props> = () => {
         name="BottomNavigator"
         component={BottomNavigator}
         options={{
+          title: '',
           headerShown: false,
         }}
       />

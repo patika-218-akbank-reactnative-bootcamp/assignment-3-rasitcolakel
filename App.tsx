@@ -5,10 +5,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Appearance} from 'react-native';
 import {Theme, ThemeContext} from './src/context/themeContext';
 import {darkTheme, lightTheme} from './src/theme';
+import {ContactsContext} from './src/context/contactsContext';
+import {Contact, setMessage} from './src/assets/fakeDataMaker';
 
 const App = () => {
   const [user, setUser] = React.useState<User | null>(null);
   const [theme, setTheme] = React.useState<Theme | null>(null);
+  const [contacts, setContacts] = React.useState<Contact[]>([]);
+  const [chatContact, setChatContact] = React.useState<Contact | null>(null);
   const login = async (_user: User) => {
     try {
       await AsyncStorage.setItem('user', JSON.stringify(_user));
@@ -56,6 +60,20 @@ const App = () => {
     setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT);
   };
 
+  const sendMessage = (contact: Contact, message: string) => {
+    if (contacts) {
+      const newContacts = contacts.map(c => {
+        if (c.id === contact.id) {
+          c.messageList.push(setMessage(message, true));
+
+          return {...c, message};
+        }
+        return c;
+      });
+      setContacts(newContacts);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -69,7 +87,16 @@ const App = () => {
           setTheme: toogleTheme,
           colors: theme === Theme.DARK ? darkTheme : lightTheme,
         }}>
-        <Navigation />
+        <ContactsContext.Provider
+          value={{
+            contacts,
+            setContacts,
+            sendMessage,
+            chatContact,
+            setChatContact,
+          }}>
+          <Navigation />
+        </ContactsContext.Provider>
       </ThemeContext.Provider>
     </UserContext.Provider>
   );
