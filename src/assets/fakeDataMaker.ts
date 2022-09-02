@@ -18,19 +18,31 @@ export type Message = {
 
 export const generateContact = (): Contact => {
   return {
-    id: faker.random.alphaNumeric(25),
+    id: faker.random.alphaNumeric(40),
     name: faker.name.fullName(),
-    lastSeen: faker.date.recent(),
+    lastSeen: faker.date.between(
+      moment().subtract(15, 'days').toDate(),
+      moment().toDate(),
+    ),
     messageList: generateMessages(faker.datatype.number({min: 0, max: 5})),
     lastMessageDate: null,
   };
 };
 
-export const setMessage = (message: string, isMe: boolean = false): Message => {
+export const generateMessage = (
+  message: string,
+  isMe: boolean = false,
+  randomDate: boolean = true,
+): Message => {
   return {
-    id: faker.random.alphaNumeric(25),
+    id: faker.random.alphaNumeric(40),
     message: message,
-    date: new Date(),
+    date: randomDate
+      ? faker.date.between(
+          moment().subtract(15, 'days').toDate(),
+          moment().toDate(),
+        )
+      : new Date(),
     isMe,
   };
 };
@@ -41,6 +53,17 @@ export const dateToString = (date: Date): string => {
 
 export const hoursAndMinutes = (date: Date): string => {
   return moment(date).format('HH:mm');
+};
+
+export const shortDate = (date: Date): string => {
+  if (moment(date).isSame(moment(), 'day')) {
+    return hoursAndMinutes(date);
+  }
+
+  if (moment(date).isSame(moment(), 'week')) {
+    return moment(date).format('ddd');
+  }
+  return moment(date).format('DD.MM');
 };
 
 export const generateContacts = (count: number = 10): Contact[] => {
@@ -54,7 +77,12 @@ export const generateContacts = (count: number = 10): Contact[] => {
 export const generateMessages = (count: number = 10): Message[] => {
   const messages: Message[] = [];
   for (let i = 0; i < count; i++) {
-    messages.push(setMessage(faker.lorem.words(3), i % 2 === 0));
+    messages.push(
+      generateMessage(
+        faker.random.words(faker.datatype.number({min: 1, max: 20})),
+        i % 2 === 0,
+      ),
+    );
   }
   return messages;
 };

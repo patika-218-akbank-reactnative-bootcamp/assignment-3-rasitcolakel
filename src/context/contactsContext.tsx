@@ -10,6 +10,7 @@ export type ContactsState = {
   setContacts: (contacts: Contact[]) => void;
   setChatContact: (contacts: Contact) => void;
   sendMessage: (contact: Contact, message: string) => void;
+  getNewContacts: () => void;
 };
 
 const initialState: ContactsState = {
@@ -18,6 +19,7 @@ const initialState: ContactsState = {
   setContacts: () => {},
   setChatContact: () => {},
   sendMessage: () => {},
+  getNewContacts: () => {},
 };
 
 export const ContactsContext = createContext<ContactsState>(initialState);

@@ -11,7 +11,7 @@ type Props = {};
 
 const BottomNavigator: React.FC<Props> = () => {
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator initialRouteName="Messages">
       <BottomTabs.Screen
         name="Contacts"
         component={ContactsScreen}

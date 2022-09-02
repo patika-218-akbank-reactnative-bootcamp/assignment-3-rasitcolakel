@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useLayoutEffect} from 'react';
-import {Contact, dateToString, generateContacts} from '../assets/fakeDataMaker';
+import React, {useLayoutEffect} from 'react';
+import {Contact, dateToString} from '../assets/fakeDataMaker';
 import {useThemeContext} from '../context/themeContext';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import Popover, {PopoverPlacement} from 'react-native-popover-view';
@@ -20,22 +20,11 @@ type Props = {
 };
 
 const ContactsScreen: React.FC<Props> = ({navigation}: Props) => {
-  const {contacts, setContacts, setChatContact} = useContactsContext();
+  const {contacts, setContacts, setChatContact, getNewContacts} =
+    useContactsContext();
   const [showPopover, setShowPopover] = React.useState<boolean>(false);
   const {colors, theme} = useThemeContext();
   const [sortType, setSortType] = React.useState<'name' | 'date'>('date');
-  useEffect(() => {
-    if (contacts !== null && contacts.length !== 0) {
-      return;
-    }
-    let _contacts = generateContacts(20);
-    _contacts = _contacts.sort((a, b) => {
-      return a.lastSeen > b.lastSeen ? -1 : 1;
-    });
-
-    setContacts(_contacts);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -119,12 +108,13 @@ const ContactsScreen: React.FC<Props> = ({navigation}: Props) => {
   };
 
   const onEndReached = () => {
-    setContacts([...contacts, ...generateContacts(20)]);
+    getNewContacts();
   };
 
   return (
     <>
       <FlatList
+        initialNumToRender={10}
         data={contacts}
         renderItem={({item}) => (
           <ContactCard contact={item} onPress={() => goToChatScreen(item)} />
@@ -136,7 +126,8 @@ const ContactsScreen: React.FC<Props> = ({navigation}: Props) => {
           />
         )}
         onEndReached={onEndReached}
-        maxToRenderPerBatch={10}
+        maxToRenderPerBatch={3}
+        removeClippedSubviews={true}
       />
     </>
   );

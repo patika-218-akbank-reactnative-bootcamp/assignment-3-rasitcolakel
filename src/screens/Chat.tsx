@@ -1,7 +1,6 @@
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import React, {useEffect, useLayoutEffect, useRef} from 'react';
 import {
-  ImageBackground,
   Keyboard,
   SafeAreaView,
   StyleSheet,
@@ -10,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
-import {hoursAndMinutes, Message} from '../assets/fakeDataMaker';
+import {Message, shortDate} from '../assets/fakeDataMaker';
 import {useContactsContext} from '../context/contactsContext';
 import {Theme, useThemeContext} from '../context/themeContext';
 import Image from 'react-native-fast-image';
@@ -91,38 +90,38 @@ const ChatScreen: React.FC<Props> = ({navigation}: Props) => {
         {item.message}
       </Text>
       <Text style={[styles.messageDate, {color: colors.text}]}>
-        {hoursAndMinutes(item.date)}
+        {shortDate(item.date)}
       </Text>
     </View>
   );
-  console.log('heights', keyboardHeight, messageInputHeight);
+
   const messageList = contacts.find(c => c.id === chatContact.id)?.messageList;
   return (
     <SafeAreaView
-      style={[styles.container, {backgroundColor: colors.secondary}]}>
-      <ImageBackground
+      style={[styles.container, {backgroundColor: colors.background}]}>
+      {/* <ImageBackground
         source={
           theme === Theme.DARK
             ? require('../assets/dark-bg.jpeg')
             : require('../assets/light-bg.jpeg')
         }
         resizeMode="cover"
-        style={styles.bgImage}>
-        <FlatList
-          ref={flatListRef}
-          data={messageList}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          style={[
-            styles.list,
-            keyboardHeight
-              ? {bottom: keyboardHeight + messageInputHeight / 2}
-              : {},
-          ]}
-          inverted
-          contentContainerStyle={{flexDirection: 'column-reverse'}}
-        />
-      </ImageBackground>
+        style={styles.bgImage}> */}
+      <FlatList
+        ref={flatListRef}
+        data={messageList}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        style={[
+          styles.list,
+          keyboardHeight
+            ? {bottom: keyboardHeight + messageInputHeight / 2}
+            : {},
+        ]}
+        inverted
+        contentContainerStyle={{flexDirection: 'column-reverse'}}
+      />
+      {/* </ImageBackground> */}
       <View
         style={[
           styles.inputContainer,
@@ -168,11 +167,12 @@ const ChatScreen: React.FC<Props> = ({navigation}: Props) => {
 export default ChatScreen;
 const styles = StyleSheet.create({
   messageContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     marginVertical: 10,
     padding: 10,
     borderRadius: 20,
+    maxWidth: '80%',
   },
   sentMessage: {
     alignSelf: 'flex-end',
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   messageDate: {
     fontSize: 10,
     alignSelf: 'flex-end',
-    paddingLeft: 10,
+    padding: 5,
   },
   image: {
     width: 45,

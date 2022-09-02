@@ -100,7 +100,7 @@ const Login: React.FC<Props> = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
-            <Text style={styles.headerText}>Log In"</Text>
+            <Text style={styles.headerText}>Log In</Text>
             <View style={styles.inputContainer}>
               <CustomInput
                 onPressIn={() => {
