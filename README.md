@@ -153,4 +153,4 @@ moment().format();
 
 # Preview
 
-<img src="screenshots/app.gif" width="50%" height="auto">
+To see the preview, please visit [this link](https://github.com/patika-218-akbank-reactnative-bootcamp/assignment-3-rasitcolakel/blob/main/screenshots/app.gif).
